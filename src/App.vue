@@ -1,4 +1,5 @@
 <script setup>
+  import CameraComponent from './components/CameraComponent.vue';
   import upload from './components/upload.vue'
 </script>
 
@@ -13,6 +14,7 @@
 
   <main>
     <upload />
+    <CameraComponent/>
   </main>
 </template>
 
