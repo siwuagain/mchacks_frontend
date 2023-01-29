@@ -19,7 +19,8 @@ export default{
       message: "",
       imageInfos: [],
 
-      dataReturned: false
+      dataReturned: false,
+      dataJSON: [],
     }
   },
   
@@ -100,15 +101,18 @@ export default{
         formData.append('file', blob, 'my-photo.png');
 
         // Post via axios or other transport method
-        const returned = http.post('http://127.0.0.1:5000/search', formData,{
+        http.post('http://127.0.0.1:5000/search', formData,{
           headers: {
             "Content-Type": "multipart/form-data"
         }
+        }).then((response) => {
+          console.log(response.data)
+          this.dataJSON = JSON.parse(response.data);
         });
       })
-      console.log(canvas)
       this.progress = 0;
       this.dataReturned = true;
+      console.log(this.dataJSON)
     }
   }
 };
@@ -179,13 +183,10 @@ export default{
             </tr>
         </thead>
         <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <tr v-for="item in dataJSON" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Apple MacBook Pro 17"
+                  {{ item.message }}
                 </th>
-                <td class="px-6 py-4">
-                    Sliver
-                </td>
             </tr>
         </tbody>
     </table>
