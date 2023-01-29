@@ -110,13 +110,48 @@ export default{
         }
         }).then((response) => {
           console.log(response.data)
-          this.dataJSON = JSON.parse(response.data);
-        });
-      })
-      this.progress = 0;
+          const results = response.data
+          console.log(results)
+          const tables_container = document.getElementById('results-container')
+          console.log(tables_container)
+          function insertRow(information, title, tb) {
+            const row = document.createElement("tr");
+            const info_cell = document.createElement("td")
+            const info_title = document.createElement("td")
+            info_cell.innerHTML = information
+            info_title.innerHTML = title
+            row.append(info_title)
+            row.append(info_cell)
+            tb.append(row)
+          }
+          results.forEach(food => {
+            const food_info = food.items[0]
+            const table = document.createElement("table");
+            const row = document.createElement("tr");
+            const food_name = document.createElement("th");
+            food_name.innerHTML = food_info.name.toUpperCase()
+            const nutritional_facts = document.createElement("th");
+            nutritional_facts.innerHTML = "Nutritional Facts"
+            row.append(food_name)
+            row.append(nutritional_facts)
+            table.append(row)
+            insertRow(food_info.calories, "Calories", table)
+            insertRow(food_info.serving_size_g, "Serving Size(g)", table)
+            insertRow(food_info.carbohydrates_total_g, "Carbohydrates (g)", table)
+            insertRow(food_info.fat_total_g, "Fat (g)", table)
+            insertRow(food_info.protein_g, "Protein (g)", table)
+            insertRow(food_info.sugar_g, "Sugar (g)", table)
+            tables_container.append(table)
+          })
+
+        
+        })
+      
+      });
       this.dataReturned = true;
-      console.log(this.dataJSON)
     }
+      
+    
   }
 };
 </script>
@@ -172,29 +207,9 @@ export default{
 
 <div v-if="dataReturned" class="flex items-center justify-center w-full py-3">
   <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 bg-white border-gray-300 border-dashed rounded-lg ">
-   
-<div class="relative overflow-x-auto">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    Nutrition fact
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Value
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="item in dataJSON" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {{ item.message }}
-                </th>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
+    <div class="relative overflow-x-auto" id="results-container">
+        
+    </div>
   </label>
 </div>
 
@@ -202,6 +217,10 @@ export default{
 </template>
 
 <style scoped>
+
+  #results-container{
+    width: 90%;
+  }
 
   #photoTaken {
     border-radius: 3px;
