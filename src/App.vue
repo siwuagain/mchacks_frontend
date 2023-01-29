@@ -4,20 +4,24 @@
 </script>
 
 <template>
-
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.png"  />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+    <img alt="Vue logo" class="logo" src="./assets/logo.png"  /> 
+  
   </header>
 
   <main>
     <upload />
     <CameraComponent/>
+
   </main>
- 
+
+<dim> 
+  <br><br><br>
+    <h1>
+    <RouterView></RouterView>
+    
+  </h1>
+  </dim>
 </template>
 
 <style scoped>
@@ -47,4 +51,6 @@ header {
     flex-wrap: wrap;
   }
 }
+
+h1 {text-align: center;}
 </style>
