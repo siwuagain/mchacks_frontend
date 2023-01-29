@@ -70,7 +70,7 @@ export default{
     },
     
     takePhoto() {
-      this.dataJSON = []
+      this.dataJSON = [];
       if(!this.isPhotoTaken) {
         this.isShotPhoto = true;
 
@@ -95,6 +95,7 @@ export default{
     },
 
     uploadImage() {
+      this.dataJSON = []
       console.log("Uploading image")
       const upload = document.getElementById("uploadPhoto");
       // const canvas = document.getElementById("photoTaken").toDataURL("image/jpeg").replace("image/jpeg", "image/imgBase64");
@@ -131,7 +132,7 @@ export default{
             const food_name = document.createElement("th");
             food_name.innerHTML = food_info.name.toUpperCase()
             const nutritional_facts = document.createElement("th");
-            nutritional_facts.innerHTML = "Nutritional Facts"
+            nutritional_facts.innerHTML = "<strong>Nutritional Facts</strong>"
             row.append(food_name)
             row.append(nutritional_facts)
             table.append(row)
@@ -153,6 +154,8 @@ export default{
     },
 
     uploadImageFromFiles() {
+                this.dataJSON = [];
+                this.dataReturned = true;
                 const image = document.getElementById("dropzone-file")
                 
                 var file = image.files[0];
@@ -166,7 +169,43 @@ export default{
                     headers: {
                          "Content-Type": "multipart/form-data"
                     }
-                });
+                }).then((response) => {
+          console.log(response.data)
+          const results = response.data
+          console.log(results)
+          const tables_container = document.getElementById('results-container')
+          console.log(tables_container)
+          function insertRow(information, title, tb) {
+            const row = document.createElement("tr");
+            const info_cell = document.createElement("td")
+            const info_title = document.createElement("td")
+            info_cell.innerHTML = information
+            info_title.innerHTML = title
+            row.append(info_title)
+            row.append(info_cell)
+            tb.append(row)
+          }
+          results.forEach(food => {
+            const food_info = food.items[0]
+            const table = document.createElement("table");
+            const row = document.createElement("tr");
+            const food_name = document.createElement("th");
+            food_name.innerHTML = food_info.name.toUpperCase()
+            const nutritional_facts = document.createElement("th");
+            nutritional_facts.innerHTML = "<strong>Nutritional Facts</strong>"
+            row.append(food_name)
+            row.append(nutritional_facts)
+            table.append(row)
+            insertRow(food_info.calories, "Calories", table)
+            insertRow(food_info.serving_size_g, "Serving Size(g)", table)
+            insertRow(food_info.carbohydrates_total_g, "Carbohydrates (g)", table)
+            insertRow(food_info.fat_total_g, "Fat (g)", table)
+            insertRow(food_info.protein_g, "Protein (g)", table)
+            insertRow(food_info.sugar_g, "Sugar (g)", table)
+            tables_container.append(table)
+          })
+      
+      });
             
             }
   }
