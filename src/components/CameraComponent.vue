@@ -149,14 +149,55 @@ export default{
       
       });
       this.dataReturned = true;
-    }
-      
-    
+      // console.log(this.dataJSON)
+    },
+
+    uploadImageFromFiles() {
+                const image = document.getElementById("dropzone-file")
+                
+                var file = image.files[0];
+
+                const formData = new FormData();
+                const blob = new Blob([file], { type: "image/png" });
+                console.log(blob)
+                formData.append('file', blob, 'my-photo.png');
+                console.log(formData)
+                http.post('http://127.0.0.1:5000/search', formData,{
+                    headers: {
+                         "Content-Type": "multipart/form-data"
+                    }
+                });
+            
+            }
   }
 };
 </script>
 
 <template>
+    <div>
+      <b1>    
+          <form className="mt-8 space-y-6" action="" method="">
+                <div class="flex items-center justify-center w-full py-3">
+                    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-200 hover:border-gray-500 ">
+                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg%22%3E"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                        </div>
+
+                        <input id="dropzone-file" type="file" />
+                        
+                    </label>
+                </div> 
+                <div class="flex items-center justify-center w-full py-3">
+
+                <a class="button" id="uploadFromForm" role="button" @click="uploadImageFromFiles">
+                            Upload
+                        </a>
+                </div>
+            </form>
+        </b1>
+    </div>
 <div id="app" class="web-camera-container">
   <div class="camera-button">
       <button type="button" class="button is-rounded" :class="{ 'is-primary' : !isCameraOpen, 'is-danger' : isCameraOpen}" @click="toggleCamera">
@@ -194,7 +235,7 @@ export default{
       Download
     </a>
   </div>
-
+  <br>
   <div v-if="isPhotoTaken && isCameraOpen" class="camera-upload">
     <a id="uploadPhoto" download="my-photo.jpg" class="button" role="button" @click="uploadImage">
       Upload
@@ -295,12 +336,15 @@ export default{
   }
 
   #uploadPhoto,
+  #uploadFromForm,
   #downloadPhoto{
     color: white;
     background-color: #4756a2;
     border-radius: 6px;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 2%;
+    padding-bottom: 2%;
     width: 100px;
   }
 

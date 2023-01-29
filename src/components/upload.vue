@@ -1,5 +1,5 @@
 <template>
-     <b1>    
+     <!-- <b1>    
         <div class="flex items-center justify-center w-full py-3">
             <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-200 hover:border-gray-500 ">
                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -13,5 +13,5 @@
                 
             </label>
         </div> 
-    </b1>
+    </b1> -->
 </template>
