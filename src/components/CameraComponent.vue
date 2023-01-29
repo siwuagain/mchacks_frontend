@@ -1,6 +1,7 @@
 <script>
 import UploadService from "../services/UploadFilesService";
 import http from "../http-common";
+import { formToJSON } from "axios";
 
 export default{
   el: '#app',
@@ -31,6 +32,7 @@ export default{
         this.isPhotoTaken = false;
         this.isShotPhoto = false;
         this.dataReturned = false;
+        this.dataJSON = []
         this.stopCameraStream();
       } else {
         this.isCameraOpen = true;
@@ -68,6 +70,7 @@ export default{
     },
     
     takePhoto() {
+      this.dataJSON = []
       if(!this.isPhotoTaken) {
         this.isShotPhoto = true;
 
