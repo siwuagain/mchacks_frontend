@@ -1,4 +1,7 @@
 <script>
+import UploadService from "../services/UploadFilesService";
+import http from "../http-common";
+
 export default{
   el: '#app',
   
@@ -8,7 +11,13 @@ export default{
       isPhotoTaken: false,
       isShotPhoto: false,
       isLoading: false,
-      link: '#'
+      link: '#',
+
+      currentImage: undefined,
+      previewImage: undefined,
+      progress: 0,
+      message: "",
+      imageInfos: [],
     }
   },
   
@@ -76,6 +85,41 @@ export default{
       const canvas = document.getElementById("photoTaken").toDataURL("image/jpeg")
     .replace("image/jpeg", "image/octet-stream");
       download.setAttribute("href", canvas);
+    },
+
+    uploadImage() {
+      console.log("Uploading image")
+      const upload = document.getElementById("uploadPhoto");
+      // const canvas = document.getElementById("photoTaken").toDataURL("image/jpeg").replace("image/jpeg", "image/imgBase64");
+      const canvas = document.getElementById("photoTaken")
+      canvas.toBlob(function(blob){
+        const formData = new FormData();
+        formData.append('file', blob, 'my-photo.png');
+
+        // Post via axios or other transport method
+        http.post('http://127.0.0.1:5000/search', formData,{
+          headers: {
+            "Content-Type": "multipart/form-data"
+        }
+        });
+      })
+      console.log(canvas)
+      this.progress = 0;
+      UploadService.upload(canvas, (event) => {
+        this.progress = Math.round((100 * event.loaded) / event.total);
+      })
+        .then((response) => {
+          this.message = response.data.message;
+          return UploadService.getFiles();
+        })
+        .then((images) => {
+          this.imageInfos = images.data;
+        })
+        .catch((err) => {
+          this.progress = 0;
+          this.message = "Could not upload the image! " + err;
+          this.currentImage = undefined;
+        });
     }
   }
 };
@@ -116,6 +160,12 @@ export default{
   <div v-if="isPhotoTaken && isCameraOpen" class="camera-download">
     <a id="downloadPhoto" download="my-photo.jpg" class="button" role="button" @click="downloadImage">
       Download
+    </a>
+  </div>
+
+  <div v-if="isPhotoTaken && isCameraOpen" class="camera-upload">
+    <a id="uploadPhoto" download="my-photo.jpg" class="button" role="button" @click="uploadImage">
+      Upload
     </a>
   </div>
 </div>
