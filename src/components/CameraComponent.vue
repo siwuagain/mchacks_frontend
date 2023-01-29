@@ -118,7 +118,9 @@ export default{
           function insertRow(information, title, tb) {
             const row = document.createElement("tr");
             const info_cell = document.createElement("td")
+            info_cell.setAttribute('class', "text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r")
             const info_title = document.createElement("td")
+            info_title.setAttribute('class', "text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r")
             info_cell.innerHTML = information
             info_title.innerHTML = title
             row.append(info_title)
@@ -128,16 +130,20 @@ export default{
           results.forEach(food => {
             const food_info = food.items[0]
             const table = document.createElement("table");
+            table.setAttribute('class', "min-w-full border text-center")
             const row = document.createElement("tr");
+            row.setAttribute('class', "border-b")
             const food_name = document.createElement("th");
+            food_name.setAttribute('class', 'text-sm font-medium text-gray-900 px-6 py-4 border-r')
             food_name.innerHTML = food_info.name.toUpperCase()
             const nutritional_facts = document.createElement("th");
-            nutritional_facts.innerHTML = "<strong>Nutritional Facts</strong>"
+            nutritional_facts.innerHTML="Nutritional Facts"
+            nutritional_facts.setAttribute('class', 'text-sm font-medium text-gray-900 px-6 py-4 border-r')
             row.append(food_name)
             row.append(nutritional_facts)
             table.append(row)
             insertRow(food_info.calories, "Calories", table)
-            insertRow(food_info.serving_size_g, "Serving Size(g)", table)
+            insertRow(food_info.serving_size_g, "Serving Size (g)", table)
             insertRow(food_info.carbohydrates_total_g, "Carbohydrates (g)", table)
             insertRow(food_info.fat_total_g, "Fat (g)", table)
             insertRow(food_info.protein_g, "Protein (g)", table)
@@ -178,7 +184,9 @@ export default{
           function insertRow(information, title, tb) {
             const row = document.createElement("tr");
             const info_cell = document.createElement("td")
+            info_cell.setAttribute('class', "text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r")
             const info_title = document.createElement("td")
+            info_title.setAttribute('class', "text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r")
             info_cell.innerHTML = information
             info_title.innerHTML = title
             row.append(info_title)
@@ -188,16 +196,20 @@ export default{
           results.forEach(food => {
             const food_info = food.items[0]
             const table = document.createElement("table");
+            table.setAttribute('class', "min-w-full border text-center")
             const row = document.createElement("tr");
+            row.setAttribute('class', "border-b")
             const food_name = document.createElement("th");
+            food_name.setAttribute('class', 'text-sm font-medium text-gray-900 px-6 py-4 border-r')
             food_name.innerHTML = food_info.name.toUpperCase()
             const nutritional_facts = document.createElement("th");
-            nutritional_facts.innerHTML = "<strong>Nutritional Facts</strong>"
+            nutritional_facts.innerHTML="Nutritional Facts"
+            nutritional_facts.setAttribute('class', 'text-sm font-medium text-gray-900 px-6 py-4 border-r')
             row.append(food_name)
             row.append(nutritional_facts)
             table.append(row)
             insertRow(food_info.calories, "Calories", table)
-            insertRow(food_info.serving_size_g, "Serving Size(g)", table)
+            insertRow(food_info.serving_size_g, "Serving Size (g)", table)
             insertRow(food_info.carbohydrates_total_g, "Carbohydrates (g)", table)
             insertRow(food_info.fat_total_g, "Fat (g)", table)
             insertRow(food_info.protein_g, "Protein (g)", table)
