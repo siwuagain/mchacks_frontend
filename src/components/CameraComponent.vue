@@ -157,7 +157,8 @@ export default{
     </button>
   </div>
   
-  <div v-if="isPhotoTaken && isCameraOpen" class="camera-download">
+  <div>
+    <div v-if="isPhotoTaken && isCameraOpen" class="camera-download">
     <a id="downloadPhoto" download="my-photo.jpg" class="button" role="button" @click="downloadImage">
       Download
     </a>
@@ -168,6 +169,9 @@ export default{
       Upload
     </a>
   </div>
+
+  </div>
+ 
 </div>
 
 
@@ -227,7 +231,7 @@ export default{
   }
 
   .camera-button {
-    color: black;
+    color: white;
     background-color: #4756a2;
     border-radius: 6px;
   }
@@ -235,5 +239,10 @@ export default{
   .camera-button:hover{
     background-color: #2c43b7;
   }
-  
+
+  #uploadPhoto,
+  #downloadPhoto{
+    color: black;
+  }
+
 </style>
