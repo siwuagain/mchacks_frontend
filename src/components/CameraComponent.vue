@@ -18,6 +18,8 @@ export default{
       progress: 0,
       message: "",
       imageInfos: [],
+
+      dataReturned: false
     }
   },
   
@@ -27,6 +29,7 @@ export default{
         this.isCameraOpen = false;
         this.isPhotoTaken = false;
         this.isShotPhoto = false;
+        this.dataReturned = false;
         this.stopCameraStream();
       } else {
         this.isCameraOpen = true;
@@ -97,7 +100,7 @@ export default{
         formData.append('file', blob, 'my-photo.png');
 
         // Post via axios or other transport method
-        http.post('http://127.0.0.1:5000/search', formData,{
+        const returned = http.post('http://127.0.0.1:5000/search', formData,{
           headers: {
             "Content-Type": "multipart/form-data"
         }
@@ -105,21 +108,7 @@ export default{
       })
       console.log(canvas)
       this.progress = 0;
-      UploadService.upload(canvas, (event) => {
-        this.progress = Math.round((100 * event.loaded) / event.total);
-      })
-        .then((response) => {
-          this.message = response.data.message;
-          return UploadService.getFiles();
-        })
-        .then((images) => {
-          this.imageInfos = images.data;
-        })
-        .catch((err) => {
-          this.progress = 0;
-          this.message = "Could not upload the image! " + err;
-          this.currentImage = undefined;
-        });
+      this.dataReturned = true;
     }
   }
 };
@@ -174,6 +163,37 @@ export default{
  
 </div>
 
+<div v-if="dataReturned" class="flex items-center justify-center w-full py-3">
+  <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 bg-white border-gray-300 border-dashed rounded-lg ">
+   
+<div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Nutrition fact
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Value
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Apple MacBook Pro 17"
+                </th>
+                <td class="px-6 py-4">
+                    Sliver
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+  </label>
+</div>
+
 
 </template>
 
@@ -184,8 +204,11 @@ export default{
     margin: 0.5rem;
   }
   .camera-box {
-    border-radius: 5px;
+    border-radius: 3px;
+    margin: 0.5rem;
     align-self: center;
+    width: 450px;
+    height: 337.5px;
   }
   .camera-shoot {
     margin: 1rem 0;
@@ -200,12 +223,12 @@ export default{
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #a2588d;
-      border-radius: 100%;
+      background-color: #4756a2;
+      border-radius: 6px;
   }
 
   .camera-shoot button:hover{
-    background-color: #b04993;
+    background-color: #2c43b7;
   }
   
   .web-camera-container {
@@ -219,9 +242,10 @@ export default{
     align-items: center;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 550px;
+    width: full;
     height: fit-content;
-    background-color: rgb(239, 239, 239);
+    background-color: white;
+    min-height: 300px;
   }
 
   .camera {
@@ -234,6 +258,13 @@ export default{
     color: white;
     background-color: #4756a2;
     border-radius: 6px;
+    padding-left: 10%;
+    padding-right: 10%;
+    width: 100px;
+  }
+
+  .camera-shoot img{
+    filter: brightness(0) invert(1); 
   }
 
   .camera-button:hover{
@@ -242,7 +273,12 @@ export default{
 
   #uploadPhoto,
   #downloadPhoto{
-    color: black;
+    color: white;
+    background-color: #4756a2;
+    border-radius: 6px;
+    padding-left: 10%;
+    padding-right: 10%;
+    width: 100px;
   }
 
 </style>
