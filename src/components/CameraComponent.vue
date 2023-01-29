@@ -123,6 +123,67 @@ export default{
 
 </template>
 
-<style>
+<style scoped>
 
+  #photoTaken {
+    border-radius: 3px;
+    margin: 0.5rem;
+  }
+  .camera-box {
+    border-radius: 5px;
+    align-self: center;
+  }
+  .camera-shoot {
+    margin: 1rem 0;
+  }
+  .camera-shoot img {
+    height: 35px;
+    object-fit: cover;
+  }
+  .camera-shoot button {
+      height: 60px;
+      width: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #a2588d;
+      border-radius: 100%;
+  }
+
+  .camera-shoot button:hover{
+    background-color: #b04993;
+  }
+  
+  .web-camera-container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 550px;
+    height: fit-content;
+    background-color: rgb(239, 239, 239);
+  }
+
+  .camera {
+    border-radius: px;
+    width: fit-content;
+    padding: 2px;
+  }
+
+  .camera-button {
+    color: black;
+    background-color: #4756a2;
+    border-radius: 6px;
+  }
+
+  .camera-button:hover{
+    background-color: #2c43b7;
+  }
+  
 </style>
