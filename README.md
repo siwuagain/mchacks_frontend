@@ -1,4 +1,6 @@
-# mchacks
+# Mchacks10 - Frontend
+
+Link to backend: https://github.com/LawrenceLiang02/McHacks10-backend
 
 This template should help get you started developing with Vue 3 in Vite.
 
